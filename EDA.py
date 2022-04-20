@@ -4,6 +4,8 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 from pandas_datareader import DataReader
 from datetime import datetime as dt
+from sklearn.model_selection import train_test_split
+
 SHOW = True
 VOL = ['WEI', 'IVDA', 'TKAT', 'CYRN', 'SLS',
        'XPON', 'HUSN', 'SNMP', 'GREE', 'USX']
@@ -123,6 +125,9 @@ def main():
     heatmap(example, ['High', 'Low', 'Volume'])
 
     box_plot(list(data_frames.items()))
+
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
+
 
 
 
