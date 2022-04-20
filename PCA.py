@@ -8,6 +8,9 @@ from datetime import datetime as dt
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.ensemble import ExtraTreesClassifier
+# from ta import add_all_ta_features
+# import yfinance as yf
+
 SHOW = False
 VOL = ['WEI', 'IVDA', 'TKAT', 'CYRN', 'SLS',
        'XPON', 'HUSN', 'SNMP', 'GREE', 'USX']
@@ -58,8 +61,16 @@ def main():
 
     name, df = list(data_frames.items())[0][0], list(data_frames.items())[0][1]
 
-    y = df['Open']
-    X = df.drop(columns=['Open'])
+    # stock = yf.download(name, train_start_date, train_end_date)
+    # stock = dropna(stock)
+    # df = add_all_ta_features(
+    #     stock, open="Open", high="High", low="Low", close="Close", volume="Volume")
+    #
+    # df = df.drop(["trend_psar_down", "trend_psar_up"], axis=1)
+    # df = df.dropna()
+
+    y = df['Close']
+    X = df.drop(columns=['Close'])
 
     X_train, X_test, y_train, y_test = train_test_split(X, y,
                                                        test_size=0.2, random_state=0)
