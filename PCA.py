@@ -8,8 +8,8 @@ from datetime import datetime as dt
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.ensemble import ExtraTreesClassifier
-# from ta import add_all_ta_features
-# import yfinance as yf
+from ta import add_all_ta_features
+import yfinance as yf
 
 SHOW = False
 VOL = ['WEI', 'IVDA', 'TKAT', 'CYRN', 'SLS',
@@ -75,27 +75,42 @@ def main():
     X_train, X_test, y_train, y_test = train_test_split(X, y,
                                                        test_size=0.2, random_state=0)
     sc = StandardScaler()
+
     X_train = sc.fit_transform(X_train)
+
     X_test = sc.transform(X_test)
 
-    components = 5
-    pca = PCA(n_components=components)
-    X_train = pca.fit_transform(X_train)
-    X_test = pca.transform(X_test)
+    components = 1
 
-    if SHOW:
-        plt.scatter(X_train[:, 0], X_train[:, 1], c=y_train)
-        plt.show()
-        plt.scatter(X_test[:, 0], X_test[:, 1], c=y_test)
-        plt.show()
+    # while pca.explained_variance_ratio_ < .95:
+    
+
+    pca = PCA(n_components=components)
+    X_train_fit = pca.fit_transform(X_train)
+    X_test = pca.transform(X_test)
+    print(X_train_fit)
+    # y = StandardScaler()
+    # x = y.fit(X_train_fit)
+    # print(y.inverse_transform(X_train_fit))
+
+
+
+    # vals = np.array(pca.components_).T
+    # print(vals)
+    # print(pd.DataFrame(vals, columns=['PC-1', 'PC-2'], index=X.columns))
+    # if SHOW:
+    #     plt.scatter(X_train[:, 0], X_train[:, 1], c=y_train)
+    #     plt.show()
+    #     plt.scatter(X_test[:, 0], X_test[:, 1], c=y_test)
+    #     plt.show()
 
     explained_variance = pca.explained_variance_ratio_
 
-    print(df.columns)
-    # Calculate the variance explained by priciple components
-    print('Variance of each component:', pca.explained_variance_ratio_)
-    print('\n Total Variance Explained:',
-          round(sum(list(pca.explained_variance_ratio_)) * 100, 2), '\n')
+    # print(df.columns)
+    # # Calculate the variance explained by priciple components
+    # print('Variance of each component:', pca.explained_variance_ratio_)
+    # print('\n Total Variance Explained:',
+    #       round(sum(list(pca.explained_variance_ratio_)) * 100, 2), '\n')
 
 
     # Create a new dataset from principal components
@@ -107,18 +122,18 @@ def main():
     refit_data['Label'] = np.array(y_train)
     print(refit_data.head(5))
 
-
-    sum_eigenvalues = np.cumsum(explained_variance)
-    if SHOW:
-        plt.bar(range(0, len(explained_variance)), explained_variance,
-                alpha=0.5, align='center', label='Individual explained variance')
-        plt.step(range(0, len(sum_eigenvalues)), sum_eigenvalues, where='mid',
-                 label='Cumulative explained variance')
-        plt.ylabel('Explained variance ratio')
-        plt.xlabel('Principal component index')
-        plt.legend(loc='best')
-        plt.tight_layout()
-        plt.show()
+    #
+    # sum_eigenvalues = np.cumsum(explained_variance)
+    # if SHOW:
+    #     plt.bar(range(0, len(explained_variance)), explained_variance,
+    #             alpha=0.5, align='center', label='Individual explained variance')
+    #     plt.step(range(0, len(sum_eigenvalues)), sum_eigenvalues, where='mid',
+    #              label='Cumulative explained variance')
+    #     plt.ylabel('Explained variance ratio')
+    #     plt.xlabel('Principal component index')
+    #     plt.legend(loc='best')
+    #     plt.tight_layout()
+    #     plt.show()
 
 
     # bin_values(y_train)
@@ -128,3 +143,7 @@ def main():
 
 
 main()
+
+
+
+
