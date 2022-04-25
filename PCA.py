@@ -12,7 +12,7 @@ from sklearn.ensemble import ExtraTreesClassifier
 # import yfinance as yf
 
 SHOW = False
-VOL = ['WEI', 'IVDA', 'TKAT', 'CYRN', 'SLS',
+VOL = ['DOGZ', 'IVDA', 'TKAT', 'CYRN', 'SLS',
        'XPON', 'HUSN', 'SNMP', 'GREE', 'USX']
 
 
@@ -69,12 +69,14 @@ def main():
     # df = df.drop(["trend_psar_down", "trend_psar_up"], axis=1)
     # df = df.dropna()
 
-    y = df['Close']
-    plt.plot(y)
-    plt.title(f'Closing Price of {name} Over Time')
-    plt.xlabel('Dates')
-    plt.ylabel('Stock Price')
-    plt.show()
+    # WFTUF
+
+    # y = df['Close']
+    # plt.plot(y)
+    # plt.title(f'Closing Price of {name} Over Time')
+    # plt.xlabel('Dates')
+    # plt.ylabel('Stock Price')
+    # plt.show()
     # X = df.drop(columns=['Close'])
     #
     # X_train, X_test, y_train, y_test = train_test_split(X, y,
@@ -100,14 +102,14 @@ def main():
     #
     #
     #
-    # # vals = np.array(pca.components_).T
-    # # print(vals)
-    # # print(pd.DataFrame(vals, columns=['PC-1', 'PC-2'], index=X.columns))
-    # # if SHOW:
-    # #     plt.scatter(X_train[:, 0], X_train[:, 1], c=y_train)
-    # #     plt.show()
-    # #     plt.scatter(X_test[:, 0], X_test[:, 1], c=y_test)
-    # #     plt.show()
+    vals = np.array(pca.components_).T
+    print(vals)
+    print(pd.DataFrame(vals, columns=['PC-1', 'PC-2'], index=X.columns))
+    if SHOW:
+        plt.scatter(X_train[:, 0], X_train[:, 1], c=y_train)
+        plt.show()
+        plt.scatter(X_test[:, 0], X_test[:, 1], c=y_test)
+        plt.show()
     #
     # explained_variance = pca.explained_variance_ratio_
     #
